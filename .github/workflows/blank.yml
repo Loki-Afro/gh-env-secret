@@ -8,6 +8,7 @@ on:
 
 jobs:
   greet:
+    environment: ${{ github.event.inputs.environment }}
     runs-on: ubuntu-latest
 
     steps:
