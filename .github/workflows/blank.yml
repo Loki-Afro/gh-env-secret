@@ -5,9 +5,9 @@ on:
     inputs:
       environment:
         type: environment
-      dev-namespace:
+      instancle-url:
         type: string
-        description: to test specific namespaces on dev
+        description: to overwrite the instace to test against
 
 jobs:
   greet:
@@ -16,7 +16,7 @@ jobs:
 
     steps:
     - name: pop env
-      run:  if [ -n "${{ github.event.inputs.dev-namespace }}" ]; then echo "CYPRSS_INSTANCE_URL=${{ github.event.inputs.dev-namespace }}" >> $GITHUB_ENV; fi 
+      run:  if [ -n "${{ github.event.inputs.instancle-url }}" ]; then echo "CYPRSS_INSTANCE_URL=${{ github.event.inputs.instancle-url }}" >> $GITHUB_ENV; fi 
     - name: Send greeting
       run: echo "${{ github.event.inputs.environment }}" && bla='${{ secrets.CYPRESS_TEACHER_PASSWORD }}' && echo "${#bla}"
     - name: verify optEnv
