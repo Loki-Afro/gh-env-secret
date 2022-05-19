@@ -5,12 +5,19 @@ on:
     inputs:
       environment:
         type: environment
+      dev-namespace:
+        type: string
+        description: to test specific namespaces on dev
 
 jobs:
   greet:
-    environment: ${{ github.event.inputs.environment }}
+    environment: ${{ github.event.inputs.dev-namespace }}
     runs-on: ubuntu-latest
 
     steps:
+    - name: pop env
+      run:  if [ -n "${{ github.event.inputs.dev-namespace }}" ]; then echo "CYPRSS_INSTANCE_URL=${{ github.event.inputs.dev-namespace }}" >> $GITHUB_ENV; fi 
     - name: Send greeting
       run: echo "${{ github.event.inputs.environment }}" && bla='${{ secrets.CYPRESS_TEACHER_PASSWORD }}' && echo "${#bla}"
+    - name: verify optEnv
+      run: echo "fff $CYPRSS_INSTANCE_URL"
